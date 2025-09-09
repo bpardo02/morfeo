@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mis Sueños</title>
+</head>
+<body>
+    <h1>Lista de Sueños</h1>
+    <a href="{% url 'registrar_sueno' %}">Agregar nuevo sueño</a>
+    <ul>
+        {% for sueno in suenos %}
+            <li><strong>{{ sueno.titulo }}</strong> - {{ sueno.fecha }}<br>{{ sueno.mensaje }} <br> {{ sueno.iniciales }} </li>
+        {% empty %}
+            <li>No hay sueños aún.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
