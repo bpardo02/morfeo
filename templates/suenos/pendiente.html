@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <title>Dream Journal - Pendiente</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style type="text/tailwindcss">
+    :root {
+      --primary-color: #6366f1;
+      --secondary-color: #1f2937;
+      --background-color: #111827;
+      --text-primary: #e5e7eb;
+      --text-secondary: #9ca3af;
+      --border-color: #374151;
+    }
+    body {
+      font-family: 'Inter', serif;
+    }
+    .font-sans {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-[var(--secondary-color)]">
+<div class="flex flex-col min-h-screen">
+
+  <header class="sticky top-0 z-10 w-full border-b border-[var(--border-color)] bg-[var(--background-color)]/80 backdrop-blur-sm">
+    <div class="container mx-auto flex items-center justify-between px-4 py-3">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-[var(--primary-color)]">bedtime</span>
+        <h1 class="text-xl font-bold text-[var(--text-primary)]">Morfeo - The Dream Log</h1>
+      </div>
+      <nav class="hidden md:flex items-center gap-6">
+        <a href="{% url 'lista_suenos' %}" class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Ver sueños</a>
+        <a href="{% url 'registrar_sueno' %}" class="text-sm font-medium text-[var(--text-primary)]">Registrar sueño</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex flex-1 items-center justify-center py-20 px-4">
+    <div class="w-full max-w-2xl text-center">
+      <div class="mb-8 flex justify-center">
+        <div class="flex h-20 w-20 items-center justify-center rounded-full bg-blue-100">
+          <span class="material-symbols-outlined text-5xl text-[var(--primary-color)]">
+            hourglass_top
+          </span>
+        </div>
+      </div>
+      <h2 class="text-5xl font-bold tracking-tighter text-[var(--text-primary)] mb-4">
+        Tu sueño está pendiente de aprobación
+      </h2>
+      <p class="text-lg max-w-xl mx-auto mb-6 text-[var(--text-primary)]  ">
+        Gracias por compartir tu sueño con nuestra comunidad. Nuestro equipo lo revisará en breve. Recibirás una notificación cuando sea aprobado y publicado, normalmente en 24-48 horas.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center font-sans">
+        <a class="inline-flex min-w-[180px] items-center justify-center rounded-md bg-[var(--primary-color)] px-6 py-3 text-base font-bold text-white shadow-md transition-transform hover:scale-105" href="{% url 'lista_suenos' %}">
+          Volver al Dashboard
+        </a>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

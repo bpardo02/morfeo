@@ -1,15 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Registrar Sueño</title>
+  <meta charset="utf-8"/>
+  <title>Registrar Sueño</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style type="text/tailwindcss">
+    :root {
+      --primary-color: #6366f1;
+      --secondary-color: #1f2937;
+      --background-color: #111827;
+      --text-color: #e5e7eb;
+      --subtle-text-color: #9ca3af;
+      --border-color: #374151;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .form-input {
+      background-color: var(--secondary-color);
+      border-color: var(--border-color);
+      color: var(--text-color);
+    }
+    .form-input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px var(--primary-color);
+      outline: none;
+    }
+    .form-input::placeholder {
+      color: var(--subtle-text-color);
+    }
+  </style>
 </head>
-<body>
-    <h1>Registrar Sueño</h1>
-    <form method="post">
+<body class="bg-[var(--background-color)] text-[var(--text-color)]">
+<div class="flex min-h-screen flex-col">
+  <header class="sticky top-0 z-10 w-full border-b border-[var(--border-color)] bg-[var(--background-color)]/80 backdrop-blur-sm">
+    <div class="container mx-auto flex items-center justify-between px-4 py-3">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-[var(--primary-color)]">bedtime</span>
+        <h1 class="text-xl font-bold">Morfeo - The Dream Log</h1>
+      </div>
+      <nav class="hidden md:flex items-center gap-6">
+        <a href="{% url 'lista_suenos' %}" class="text-sm font-medium text-[var(--subtle-text-color)] hover:text-[var(--text-color)] transition-colors">Ver sueños</a>
+        <a href="{% url 'registrar_sueno' %}" class="text-sm font-medium text-[var(--text-color)]">Registrar sueño</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto flex-1 px-4 py-10">
+    <div class="mx-auto max-w-2xl">
+      <div class="space-y-2 text-center mb-10">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-5xl">Registrar Sueño</h2>
+        <p class="text-[var(--subtle-text-color)]">Captura los detalles de tu sueño antes de que se desvanezcan.</p>
+      </div>
+
+      <form method="post" class="space-y-6">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar</button>
-    </form>
-    <a href="{% url 'lista_suenos' %}">Ver todos los sueños</a>
+        <!-- Aquí Django insertará los campos -->
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+        {% if field.name != "honeypot" %}
+            <div>
+            <label class="block text-sm font-medium text-[var(--text-color)] mb-2" for="{{ field.id_for_label }}">
+                {{ field.label }}
+            </label>
+            {{ field }}
+            {% if field.errors %}
+                <p class="text-red-400 text-sm mt-1">{{ field.errors|striptags }}</p>
+            {% endif %}
+            </div>
+        {% else %}
+            {{ field }} {# sigue en el HTML como hidden, sin label visible #}
+        {% endif %}
+        {% endfor %}
+
+
+        <div class="flex justify-center pt-4">
+          <button type="submit" class="flex items-center justify-center rounded-md bg-[var(--primary-color)] px-8 py-3 text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all duration-300 ease-in-out">
+            Guardar sueño
+            <span class="material-symbols-outlined ml-2">save</span>
+          </button>
+        </div>
+      </form>
+
+      <div class="mt-8 text-center">
+        <a href="{% url 'lista_suenos' %}" class="text-[var(--accent-color)] hover:text-indigo-400 font-medium transition-colors">← Volver a la lista</a>
+      </div>
+    </div>
+  </main>
+</div>
 </body>
 </html>
