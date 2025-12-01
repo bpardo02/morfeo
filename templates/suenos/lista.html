@@ -2,17 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="utf-8"/>
-  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
-  <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link crossorigin href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900" onload="this.rel='stylesheet'" rel="stylesheet"/>
   <title>The Dream Log</title>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <style type="text/tailwindcss">
     :root {
-
-
-
-    --primary-color: #6366f1;
+      --primary-color: #6366f1;
       --secondary-color: #1f2937;
       --background-color: #111827;
       --text-primary: #e5e7eb;
@@ -21,53 +19,71 @@
     }
   </style>
 </head>
-<body class="bg-[var(--background-color)]" style='font-family: Inter, "Noto Sans", sans-serif;'>
+<body class="bg-[var(--background-color)] font-sans">
 
+  <!-- HEADER -->
   <header class="sticky top-0 z-10 w-full border-b border-[var(--border-color)] bg-[var(--background-color)]/80 backdrop-blur-sm">
-    <div class="container mx-auto flex items-center justify-between px-4 py-3">
+    <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
       <div class="flex items-center gap-3">
         <span class="material-symbols-outlined text-[var(--primary-color)]">bedtime</span>
-        <h1 class="text-xl font-bold text-[var(--text-primary)]">Morfeo - The Dream Log</h1>
+        <h1 class="text-lg sm:text-xl font-bold text-[var(--text-primary)]">Morfeo - The Dream Log</h1>
       </div>
       <nav class="hidden md:flex items-center gap-6">
         <a href="{% url 'lista_suenos' %}" class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Ver sueños</a>
         <a href="{% url 'registrar_sueno' %}" class="text-sm font-medium text-[var(--text-primary)]">Registrar sueño</a>
       </nav>
+      <!-- Mobile menu icon -->
+      <button id="mobileMenuBtn" class="md:hidden text-[var(--text-primary)]">
+        <span class="material-symbols-outlined text-3xl">menu</span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden flex-col gap-4 px-4 pb-4 md:hidden">
+      <a href="{% url 'lista_suenos' %}" class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Ver sueños</a>
+      <a href="{% url 'registrar_sueno' %}" class="text-sm font-medium text-[var(--text-primary)]">Registrar sueño</a>
     </div>
   </header>
-  
-<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
-  <main class="flex-1 p-8 md:p-12 lg:p-16">
-    <article class="text-center mb-12">
-      <h1 class="text-[var(--text-primary)] text-5xl font-bold mb-2">The Dream Log</h1>
-      <p class="text-[var(--text-secondary)] text-lg">Un registro del subconsciente</p>
-      <a href="{% url 'registrar_sueno' %}" 
-         class="inline-block mt-6 px-4 py-2 rounded-lg bg-[var(--accent-color)] text-white font-semibold hover:bg-[var(--primary-color)] transition-colors">
-        Agregar nuevo sueño
-      </a>
-    </article>
 
-    <section class="max-w-4xl mx-auto">
-      <div class="space-y-12">
-        {% for sueno in suenos %}
-        <article class="p-6 rounded-lg bg-[var(--secondary-color)]/50 hover:bg-[var(--secondary-color)] transition-colors cursor-pointer">
-          <header class="mb-4">
-            <h2 class="text-3xl font-bold text-[var(--text-primary)] mb-2">
-              {{ sueno.titulo }}
-            </h2>
-            <p class="text-[var(--text-secondary)] text-sm">Publicado el {{ sueno.fecha }}</p>
-          </header>
-          <div class="text-[var(--text-secondary)] space-y-4">
-            <p>{{ sueno.mensaje }}</p>
-            <p class="italic">- {{ sueno.iniciales }}</p>
-          </div>
-        </article>
-        {% empty %}
-        <p class="text-center text-[var(--text-secondary)]">No hay sueños aún.</p>
-        {% endfor %}
-      </div>
-    </section>
-  </main>
-</div>
+  <div class="flex min-h-screen w-full flex-col overflow-x-hidden">
+    <main class="flex-1 p-6 sm:p-10 md:p-12 lg:p-16">
+      <article class="text-center mb-12">
+        <h1 class="text-[var(--text-primary)] text-4xl sm:text-5xl font-bold mb-2">The Dream Log</h1>
+        <p class="text-[var(--text-secondary)] text-base sm:text-lg">Un registro del subconsciente</p>
+        <a href="{% url 'registrar_sueno' %}"
+           class="inline-block mt-6 px-4 py-2 rounded-lg bg-[var(--primary-color)] text-white font-semibold hover:bg-indigo-500 transition-colors text-sm sm:text-base">
+          Agregar nuevo sueño
+        </a>
+      </article>
+
+      <section class="max-w-4xl mx-auto">
+        <div class="space-y-8 sm:space-y-12">
+          {% for sueno in suenos %}
+          <article class="p-4 sm:p-6 rounded-lg bg-[var(--secondary-color)]/50 hover:bg-[var(--secondary-color)] transition-colors cursor-pointer">
+            <header class="mb-4">
+              <h2 class="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] mb-2">{{ sueno.titulo }}</h2>
+              <p class="text-[var(--text-secondary)] text-xs sm:text-sm">Publicado el {{ sueno.fecha }}</p>
+            </header>
+            <div class="text-[var(--text-secondary)] space-y-4 text-sm sm:text-base">
+              <p>{{ sueno.mensaje }}</p>
+              <p class="italic">- {{ sueno.iniciales }}</p>
+            </div>
+          </article>
+          {% empty %}
+          <p class="text-center text-[var(--text-secondary)]">No hay sueños aún.</p>
+          {% endfor %}
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const btn = document.getElementById('mobileMenuBtn');
+    const menu = document.getElementById('mobileMenu');
+
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
 </body>
 </html>
