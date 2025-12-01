@@ -2,11 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dream Journal - Pendiente</title>
-  <link href="https://fonts.googleapis.com" rel="preconnect"/>
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <style type="text/tailwindcss">
     :root {
@@ -18,9 +21,6 @@
       --border-color: #374151;
     }
     body {
-      font-family: 'Inter', serif;
-    }
-    .font-sans {
       font-family: 'Inter', sans-serif;
     }
   </style>
@@ -28,42 +28,66 @@
 <body class="bg-[var(--secondary-color)]">
 <div class="flex flex-col min-h-screen">
 
+  <!-- Header -->
   <header class="sticky top-0 z-10 w-full border-b border-[var(--border-color)] bg-[var(--background-color)]/80 backdrop-blur-sm">
-    <div class="container mx-auto flex items-center justify-between px-4 py-3">
+    <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
       <div class="flex items-center gap-3">
         <span class="material-symbols-outlined text-[var(--primary-color)]">bedtime</span>
-        <h1 class="text-xl font-bold text-[var(--text-primary)]">Morfeo - The Dream Log</h1>
+        <h1 class="text-lg sm:text-xl font-bold text-[var(--text-primary)]">Morfeo - The Dream Log</h1>
       </div>
+
       <nav class="hidden md:flex items-center gap-6">
         <a href="{% url 'lista_suenos' %}" class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Ver sueños</a>
         <a href="{% url 'registrar_sueno' %}" class="text-sm font-medium text-[var(--text-primary)]">Registrar sueño</a>
       </nav>
+
+      <!-- Mobile menu button -->
+      <button id="mobileMenuBtn" class="md:hidden text-[var(--text-primary)]">
+        <span class="material-symbols-outlined text-3xl">menu</span>
+      </button>
+    </div>
+
+    <!-- Mobile nav -->
+    <div id="mobileMenu" class="hidden flex-col gap-4 px-4 pb-4 md:hidden">
+      <a href="{% url 'lista_suenos' %}" class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Ver sueños</a>
+      <a href="{% url 'registrar_sueno' %}" class="text-sm font-medium text-[var(--text-primary)]">Registrar sueño</a>
     </div>
   </header>
 
-  <main class="flex flex-1 items-center justify-center py-20 px-4">
-    <div class="w-full max-w-2xl text-center">
+  <!-- Main content -->
+  <main class="flex flex-1 items-center justify-center py-16 px-4 sm:py-20">
+    <div class="w-full max-w-3xl text-center">
+
       <div class="mb-8 flex justify-center">
-        <div class="flex h-20 w-20 items-center justify-center rounded-full bg-blue-100">
-          <span class="material-symbols-outlined text-5xl text-[var(--primary-color)]">
-            hourglass_top
-          </span>
+        <div class="flex h-20 w-20 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-200/20">
+          <span class="material-symbols-outlined text-5xl text-[var(--primary-color)]">hourglass_top</span>
         </div>
       </div>
-      <h2 class="text-5xl font-bold tracking-tighter text-[var(--text-primary)] mb-4">
+
+      <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-[var(--text-primary)] mb-4">
         Tu sueño está pendiente de aprobación
       </h2>
-      <p class="text-lg max-w-xl mx-auto mb-6 text-[var(--text-primary)]  ">
-        Gracias por compartir tu sueño con nuestra comunidad. Nuestro equipo lo revisará en breve. Recibirás una notificación cuando sea aprobado y publicado, normalmente en 24-48 horas.
+
+      <p class="text-base sm:text-lg max-w-xl mx-auto mb-8 text-[var(--text-primary)]">
+        Gracias por compartir tu sueño con nuestra comunidad. Nuestro equipo lo revisará en breve. Recibirás una notificación una vez aprobado y publicado, normalmente en 24-48 horas.
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center font-sans">
-        <a class="inline-flex min-w-[180px] items-center justify-center rounded-md bg-[var(--primary-color)] px-6 py-3 text-base font-bold text-white shadow-md transition-transform hover:scale-105" href="{% url 'lista_suenos' %}">
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="{% url 'lista_suenos' %}"
+           class="inline-flex min-w-[180px] items-center justify-center rounded-md bg-[var(--primary-color)] px-6 py-3 text-base font-bold text-white shadow-md transition-transform hover:scale-105">
           Volver al Dashboard
         </a>
       </div>
+
     </div>
   </main>
 </div>
+
+<script>
+  const mobileBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+</script>
 
 </body>
 </html>
